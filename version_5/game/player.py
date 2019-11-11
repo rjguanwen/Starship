@@ -108,3 +108,12 @@ class Player(physicalobject.PhysicalObject):
         new_bullet.velocity_y = bullet_vy
         # 将子弹加入对象列表
         self.new_objects.append(new_bullet)
+
+    def handle_collision_with(self, obj2):
+        """ 碰撞之后的动作 """
+        if isinstance(obj2, bullet.Bullet):
+            # 如果飞船是与子弹相碰
+            pass
+        else:
+            # 否则飞船被销毁
+            self.dead = True

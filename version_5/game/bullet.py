@@ -14,7 +14,7 @@
 __author__ = 'zhengbin <rjguanwen001@163.com>'  
 
 import pyglet
-from version_5.game import physicalobject, resources
+from version_5.game import physicalobject, resources, player
 
 
 class Bullet(physicalobject.PhysicalObject):
@@ -32,3 +32,11 @@ class Bullet(physicalobject.PhysicalObject):
     # 子弹从屏幕消失
     def die(self, dt):
         self.dead = True
+
+    def handle_collision_with(self, obj2):
+        """ 碰撞之后的动作 """
+        if isinstance(obj2, player.Player):
+            # 如果飞船是与子弹相碰
+            pass
+        else:
+            self.dead = True
