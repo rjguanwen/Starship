@@ -37,6 +37,8 @@ class Player(physicalobject.PhysicalObject):
         # 子弹初始速度
         self.bullet_speed = 700.0
 
+        self.reacts_to_bullets = False
+
     def update(self, dt):
         super(Player, self).update(dt)
         self.move_mode_1(dt)
@@ -55,6 +57,11 @@ class Player(physicalobject.PhysicalObject):
             force_y = math.sin(angle_radians) * self.thrust * dt
             self.velocity_x += force_x
             self.velocity_y += force_y
+            if self.velocity_x > 300:
+                self.velocity_x = 300
+            if self.velocity_y >300:
+                self.velocity_y =300
+
             # up键按下，引擎发动，引擎火焰出现
             # 设置引擎火焰的位置与显示
             self.engine_sprite.rotation = self.rotation
@@ -111,9 +118,10 @@ class Player(physicalobject.PhysicalObject):
 
     def handle_collision_with(self, obj2):
         """ 碰撞之后的动作 """
-        if isinstance(obj2, bullet.Bullet):
-            # 如果飞船是与子弹相碰
-            pass
-        else:
-            # 否则飞船被销毁
-            self.dead = True
+        # if isinstance(obj2, bullet.Bullet):
+        #     # 如果飞船是与子弹相碰
+        #     pass
+        # else:
+        #     # 否则飞船被销毁
+        #     self.dead = True
+        self.dead = True

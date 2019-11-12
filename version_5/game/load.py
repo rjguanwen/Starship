@@ -15,7 +15,7 @@ __author__ = 'zhengbin <rjguanwen001@163.com>'
 
 import math
 import pyglet, random
-from version_5.game import resources, physicalobject, util
+from version_5.game import resources, asteroid, util
 
 def asteroids(num_asteroids, player_position, batch=None):
     """ 加载小行星 """
@@ -28,9 +28,8 @@ def asteroids(num_asteroids, player_position, batch=None):
         while util.distance((asteroid_x, asteroid_y), player_position) < 100:
             asteroid_x = random.randint(0, 800)
             asteroid_y = random.randint(0, 600)
-        new_asteroid = physicalobject.PhysicalObject(img=resources.asteroid_image,
-                                            x=asteroid_x, y=asteroid_y,
-                                            batch=batch)
+        # 生成小行星
+        new_asteroid = asteroid.Asteroid(x=asteroid_x, y=asteroid_y, batch=batch)
         # 随机旋转小行星的角度
         new_asteroid.rotation = random.randint(0, 360)
         # 为小行星设置随机速度

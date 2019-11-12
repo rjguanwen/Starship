@@ -31,7 +31,7 @@ level_label = pyglet.text.Label(text="My Amazing Game",
 # 玩家飞船
 player_ship = player.Player(x=400, y=300, batch=main_batch)
 # 加载小行星
-asteroids = load.asteroids(6, player_ship.position, main_batch)
+asteroids = load.asteroids(10, player_ship.position, main_batch)
 
 # 加载生命值显示
 player_lives = load.player_lives(5, main_batch)

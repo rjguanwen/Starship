@@ -27,7 +27,9 @@ class Bullet(physicalobject.PhysicalObject):
             **kwargs
         )
         # 0.5秒后调用一次 die 方法
-        pyglet.clock.schedule_once(self.die, 0.5)
+        pyglet.clock.schedule_once(self.die, 1)
+        # 标记自己是子弹
+        self.is_bullet = True
 
     # 子弹从屏幕消失
     def die(self, dt):
@@ -35,8 +37,9 @@ class Bullet(physicalobject.PhysicalObject):
 
     def handle_collision_with(self, obj2):
         """ 碰撞之后的动作 """
-        if isinstance(obj2, player.Player):
-            # 如果飞船是与子弹相碰
-            pass
-        else:
-            self.dead = True
+        # if isinstance(obj2, player.Player):
+        #     # 如果飞船是与子弹相碰
+        #     pass
+        # else:
+        #     self.dead = True
+        self.dead = True

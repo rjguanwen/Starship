@@ -2,7 +2,7 @@
 """
 -------------------------------------------------
    File Name：     physicalobject
-   Description :
+   Description : 游戏对象的超类
    Author :       zhengbin
    date：          2019/11/11
 -------------------------------------------------
@@ -25,6 +25,10 @@ class PhysicalObject(pyglet.sprite.Sprite):
         self.dead = False
         # 存放由本对象产生的新对象，例如飞船发射子弹
         self.new_objects = []
+        # 是否针对子弹做出响应
+        self.reacts_to_bullets = True
+
+        self.is_bullet = False
 
     def update(self, dt):
         self.x += self.velocity_x * dt
@@ -50,10 +54,20 @@ class PhysicalObject(pyglet.sprite.Sprite):
 
     def collides_with(self, other_object):
         """ 判断两个物体是否碰撞 """
+        if not self.reacts_to_bullets and other_object.is_bullet:
+            # 如果碰撞物是子弹且本物体不需要响应子弹的碰撞
+            return False
+        if self.is_bullet and not other_object.reacts_to_bullets:
+            return False
+        # 计算距离，检测是否碰撞
         collision_distance = self.image.width / 2 + other_object.image.width / 2
         actual_distance = util.distance(self.position, other_object.position)
         return (actual_distance <= collision_distance)
 
     def handle_collision_with(self, other_object):
         """ 碰撞导致的效果 """
-        self.dead = True
+        if other_object.__class__ == self.__class__:
+            # 两个相同的物体碰撞不消失，例如两个小行星或者两个子弹
+            self.dead = False
+        else:
+            self.dead = True
