@@ -24,10 +24,10 @@ def center_image(image):
     image.anchor_y = image.height / 2
 
 # 加载图片
-player_image = pyglet.resource.image('player.png')
-bullet_image = pyglet.resource.image('bullet.png')
-asteroid_image = pyglet.resource.image('asteroid.png')
-engine_image = pyglet.resource.image('engine_flame.png')
+player_image = pyglet.resource.image('player_diy_2.png')
+bullet_image = pyglet.resource.image('bullet_diy_1.png')
+asteroid_image = pyglet.resource.image('asteroid_diy_1.png')
+engine_image = pyglet.resource.image('engine_flame_diy_1.png')
 # 使图片锚点居中
 center_image(player_image)
 center_image(bullet_image)

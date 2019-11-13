@@ -41,6 +41,10 @@ class Player(physicalobject.PhysicalObject):
         # 是否响应子弹的碰撞
         self.reacts_to_bullets = False
 
+        # 时间句柄
+        self.key_handler = key.KeyStateHandler()
+        self.event_handlers = [self, self.key_handler]
+
     def update(self, dt):
         super(Player, self).update(dt)
         self.move_mode_1(dt)
@@ -75,7 +79,6 @@ class Player(physicalobject.PhysicalObject):
             #
             self.engine_sprite.visible = False
 
-
     def move_mode_2(self, dt):
         if self.key_handler[key.LEFT]:
             # 如果按下left键，则飞船向左飞
@@ -90,13 +93,6 @@ class Player(physicalobject.PhysicalObject):
             # 如果按下down键，则飞船后退
             self.y -= self.thrust * dt
 
-    def delete(self):
-        """ 销毁 """
-        #  删除引擎火焰
-        self.engine_sprite.delete()
-        # 删除飞船
-        super(Player, self).delete()
-
     # 按下空格键时开火发射子弹
     def on_key_press(self, symbol, modifiers):
         if symbol == key.SPACE:
@@ -104,8 +100,6 @@ class Player(physicalobject.PhysicalObject):
 
     # 发射子弹
     def fire(self):
-        # 播放子弹发射的声音
-        resources.bullet_sound.play()
 
         # 将角度转换为弧度并逆转方向
         angle_radians = -math.radians(self.rotation)
@@ -114,6 +108,8 @@ class Player(physicalobject.PhysicalObject):
         bullet_x = self.x + math.cos(angle_radians) * ship_radius
         bullet_y = self.y + math.sin(angle_radians) * ship_radius
         new_bullet = bullet.Bullet(bullet_x, bullet_y, batch=self.batch)
+        # 设置子弹的旋转方向
+        new_bullet.rotation = self.rotation
         # 计算子弹速度，与计算飞船速度类似
         bullet_vx = (self.velocity_x + math.cos(angle_radians) * self.bullet_speed)
         bullet_vy = (self.velocity_y + math.sin(angle_radians) * self.bullet_speed)
@@ -121,6 +117,9 @@ class Player(physicalobject.PhysicalObject):
         new_bullet.velocity_y = bullet_vy
         # 将子弹加入对象列表
         self.new_objects.append(new_bullet)
+
+        # 播放子弹发射的声音
+        resources.bullet_sound.play()
 
     def handle_collision_with(self, obj2):
         """ 碰撞之后的动作 """
@@ -131,3 +130,10 @@ class Player(physicalobject.PhysicalObject):
         #     # 否则飞船被销毁
         #     self.dead = True
         self.dead = True
+
+    def delete(self):
+        """ 销毁 """
+        #  删除引擎火焰
+        self.engine_sprite.delete()
+        # 删除飞船
+        super(Player, self).delete()

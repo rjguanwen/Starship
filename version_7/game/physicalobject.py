@@ -28,8 +28,11 @@ class PhysicalObject(pyglet.sprite.Sprite):
         self.new_objects = []
         # 是否针对子弹做出响应
         self.reacts_to_bullets = True
-
+        # 是否是子弹
         self.is_bullet = False
+
+        # 键盘与鼠标时间句柄
+        self.event_handlers = []
 
     def update(self, dt):
         self.x += self.velocity_x * dt
