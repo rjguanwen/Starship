@@ -25,7 +25,7 @@ game_window = pyglet.window.Window(WIN_WIDTH, WIN_HEIGHT)
 main_batch = pyglet.graphics.Batch()
 
 # 使用文字标签
-score_label = pyglet.text.Label(text="Score: 0", x=SCORE_LABEL_X, y=SCORE_LABEL_Y, batch=main_batch)
+score_label = pyglet.text.Label(text="得分: 0", x=SCORE_LABEL_X, y=SCORE_LABEL_Y, batch=main_batch)
 game_label = pyglet.text.Label(text=GAME_NAME,
                                 x=GAME_LABEL_X, y=GAME_LABEL_Y, anchor_x='center',
                                 batch=main_batch)
@@ -49,7 +49,7 @@ def init():
     """ 初始化 """
     global score, num_asteroids
     score = 0
-    score_label.text = "Score: " + str(score)
+    score_label.text = "得分: " + str(score)
     # 小行星个数
     num_asteroids = ASTEROIDS_INIT_NUM
     reset_level(LIVES_NUM)
@@ -95,7 +95,7 @@ def reset_level(num_lives):
 def on_draw():
     game_window.clear()
     # 背景颜色
-    # glClearColor(0.1, 0.6, 1, 1)
+    glClearColor(0.1, 0.6, 1, 1)
     main_batch.draw()
 
     # .......
@@ -154,7 +154,7 @@ def update(dt):
         # 如果待移除的是小行星，则记分+1
         if isinstance(to_remove, asteroid.Asteroid):
             score += 1
-            score_label.text = "Score: " + str(score)
+            score_label.text = "得分: " + str(score)
 
     # 将新对象置入对象列表
     game_objects.extend(to_add)
